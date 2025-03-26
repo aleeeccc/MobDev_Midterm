@@ -1,291 +1,438 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5F5">
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="80dp"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Header with image background -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="220dp">
+
+                <ImageView
+                    android:id="@+id/header_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/category_gradient_background"
+                    android:alpha="0.8"
+                    android:contentDescription="Background" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/cleaner_image"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center_horizontal"
+                        android:padding="4dp"
+                        android:scaleType="centerCrop"
+                        app:shapeAppearanceOverlay="@style/CircularImageView"
+                        app:strokeWidth="4dp"
+                        app:strokeColor="@android:color/white"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="Cleaner profile image" />
+
+                    <TextView
+                        android:id="@+id/cleaner_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cleaner Name"
+                        android:textColor="@android:color/white"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="12dp"
+                        android:layout_gravity="center_horizontal" />
+
+                    <TextView
+                        android:id="@+id/cleaner_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cleaning Category"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:layout_marginTop="4dp"
+                        android:layout_gravity="center_horizontal" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- Spacing between header and first card -->
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+            <!-- Rating Card - no overlap -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rating"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_marginTop="4dp">
+
+                            <RatingBar
+                                android:id="@+id/cleaner_rating_bar"
+                                style="?android:attr/ratingBarStyleSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:isIndicator="true"
+                                android:rating="4.5" />
+
+                            <TextView
+                                android:id="@+id/cleaner_rating"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="4.5"
+                                android:textStyle="bold"
+                                android:textSize="14sp"
+                                android:layout_marginStart="4dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#E0E0E0" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Age"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/cleaner_age"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="25 years"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#E0E0E0" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Experience"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/cleaner_experience_years"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="5 years"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Contact Info -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Contact Information"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="16dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@android:drawable/ic_menu_call"
+                            app:tint="@color/material_dynamic_primary50" />
+
+                        <TextView
+                            android:id="@+id/cleaner_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="+1 234 567 8901"
+                            android:textSize="16sp"
+                            android:layout_marginStart="16dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@android:drawable/ic_menu_mylocation"
+                            app:tint="@color/material_dynamic_primary50" />
+
+                        <TextView
+                            android:id="@+id/cleaner_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="123 Main St, Anytown, CA"
+                            android:textSize="16sp"
+                            android:layout_marginStart="16dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- About Section -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="About"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:id="@+id/cleaner_about"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Specialized in home and office cleaning with over 5 years of experience. Proficient with all cleaning tools and professional-grade equipment."
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Capability Index Section -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Capability Index"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="16dp" />
+
+                    <!-- Attitude -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Attitude"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="12dp">
+
+                        <ProgressBar
+                            android:id="@+id/attitude_bar"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="16dp"
+                            android:layout_weight="1"
+                            android:max="5"
+                            android:progress="4"
+                            android:progressTint="@color/material_dynamic_primary60" />
+
+                        <TextView
+                            android:id="@+id/attitude_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4.0"
+                            android:textStyle="bold"
+                            android:layout_marginStart="12dp" />
+                    </LinearLayout>
+
+                    <!-- Cleaning Quality -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cleaning Quality"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="12dp">
+
+                        <ProgressBar
+                            android:id="@+id/cleaning_quality_bar"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="16dp"
+                            android:layout_weight="1"
+                            android:max="5"
+                            android:progress="4"
+                            android:progressTint="@color/material_dynamic_primary60" />
+
+                        <TextView
+                            android:id="@+id/cleaning_quality_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4.0"
+                            android:textStyle="bold"
+                            android:layout_marginStart="12dp" />
+                    </LinearLayout>
+
+                    <!-- Customer Satisfaction -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Customer Satisfaction"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="4dp">
+
+                        <ProgressBar
+                            android:id="@+id/customer_satisfaction_bar"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="16dp"
+                            android:layout_weight="1"
+                            android:max="5"
+                            android:progress="4"
+                            android:progressTint="@color/material_dynamic_primary60" />
+
+                        <TextView
+                            android:id="@+id/customer_satisfaction_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4.0"
+                            android:textStyle="bold"
+                            android:layout_marginStart="12dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Fixed Book Button at bottom -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:background="#FFFFFF"
+        android:elevation="8dp">
 
-        <!-- Header with image background -->
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="220dp">
-
-            <ImageView
-                android:id="@+id/header_background"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/category_gradient_background"
-                android:alpha="0.8"
-                android:contentDescription="Background" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/cleaner_image"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center_horizontal"
-                    android:padding="4dp"
-                    android:scaleType="centerCrop"
-                    app:shapeAppearanceOverlay="@style/CircularImageView"
-                    app:strokeWidth="4dp"
-                    app:strokeColor="@android:color/white"
-                    android:contentDescription="Cleaner profile image" />
-
-                <TextView
-                    android:id="@+id/cleaner_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cleaner Name"
-                    android:textColor="@android:color/white"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="12dp"
-                    android:layout_gravity="center_horizontal" />
-
-                <TextView
-                    android:id="@+id/cleaner_category"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cleaning Category"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp"
-                    android:layout_marginTop="4dp"
-                    android:layout_gravity="center_horizontal" />
-            </LinearLayout>
-        </FrameLayout>
-
-        <!-- Spacing between header and first card -->
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="16dp" />
-
-        <!-- Rating Card - no overlap -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp"
-                android:gravity="center">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rating"
-                        android:textSize="14sp" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:layout_marginTop="4dp">
-
-                        <RatingBar
-                            android:id="@+id/cleaner_rating_bar"
-                            style="?android:attr/ratingBarStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:isIndicator="true"
-                            android:rating="4.5" />
-
-                        <TextView
-                            android:id="@+id/cleaner_rating"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="4.5"
-                            android:textStyle="bold"
-                            android:textSize="14sp"
-                            android:layout_marginStart="4dp" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="#E0E0E0" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Age"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/cleaner_age"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="25 years"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="4dp" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="#E0E0E0" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Experience"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/cleaner_experience_years"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="5 years"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="4dp" />
-                </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Contact Info -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Contact Information"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="16dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="12dp">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@android:drawable/ic_menu_call"
-                        app:tint="@color/material_dynamic_primary50" />
-
-                    <TextView
-                        android:id="@+id/cleaner_phone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="+1 234 567 8901"
-                        android:textSize="16sp"
-                        android:layout_marginStart="16dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@android:drawable/ic_menu_mylocation"
-                        app:tint="@color/material_dynamic_primary50" />
-
-                    <TextView
-                        android:id="@+id/cleaner_address"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="123 Main St, Anytown, CA"
-                        android:textSize="16sp"
-                        android:layout_marginStart="16dp" />
-                </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- About Section -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="About"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="8dp" />
-
-                <TextView
-                    android:id="@+id/cleaner_experience"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Specialized in home and office cleaning with over 5 years of experience. Proficient with all cleaning tools and professional-grade equipment."
-                    android:textSize="15sp"
-                    android:lineSpacingExtra="4dp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Book Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/book_button"
             android:layout_width="match_parent"
@@ -297,5 +444,6 @@
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
             app:cornerRadius="8dp" />
+
     </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+</FrameLayout>

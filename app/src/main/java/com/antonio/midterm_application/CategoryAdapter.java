@@ -1,10 +1,8 @@
 package com.antonio.midterm_application;
 
-// CategoryAdapter.java
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -23,7 +21,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_cleaner_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category_list, parent, false);
         return new ViewHolder(view);
     }
 
@@ -32,7 +30,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         String category = categories.get(position);
         holder.textView.setText(category);
 
-        // Set appropriate icons based on category
         if (category.contains("Cleaning Service")) {
             holder.imageView.setImageResource(R.drawable.ic_cleaning);
         } else if (category.contains("Cleaning Appliance")) {
@@ -64,5 +61,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     public interface OnCategoryClickListener {
         void onCategoryClick(String category);
+    }
+
+    public void updateCategories(List<String> newCategories) {
+        this.categories = newCategories;
+        notifyDataSetChanged();
     }
 }

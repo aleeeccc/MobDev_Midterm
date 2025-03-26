@@ -7,16 +7,19 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class BookingActivity extends AppCompatActivity {
@@ -52,12 +55,23 @@ public class BookingActivity extends AppCompatActivity {
         TextView cleanerRatingTextView = findViewById(R.id.booking_cleaner_rating);
         ImageView cleanerImageView = findViewById(R.id.cleaner_image_small);
 
+        // Set the actual data to the views
+        cleanerNameTextView.setText(cleanerName);
+        cleanerCategoryTextView.setText(cleanerCategory);
+        cleanerRatingTextView.setText(String.valueOf(cleanerRating));
+        cleanerImageView.setImageResource(R.drawable.ic_person);
+
         // Set action bar title
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Book " + cleanerName);
             getSupportActionBar().setSubtitle(cleanerCategory);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        // Set minimum date to tomorrow (current date + 1)
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        serviceDatePicker.setMinDate(calendar.getTimeInMillis());
 
         // Set spinner data based on cleaner category
         setupServiceItems(cleanerCategory);
@@ -124,13 +138,68 @@ public class BookingActivity extends AppCompatActivity {
             return;
         }
 
-        // Here you would typically save the booking to a database
-        // For now, just show a confirmation message
-        String message = "Booking confirmed for " + selectedService + " on " + selectedDate;
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        // Create custom dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_booking_confirmation, null);
+        builder.setView(dialogView);
 
-        // Close the activity and return to previous screen
-        finish();
+        // Get the container for booking details
+        LinearLayout detailsContainer = dialogView.findViewById(R.id.booking_details_container);
+
+        // Add booking details with icons
+        addDetailRow(detailsContainer, android.R.drawable.ic_menu_myplaces, "Professional", cleanerName);
+        addDetailRow(detailsContainer, android.R.drawable.ic_menu_agenda, "Category", cleanerCategory);
+        addDetailRow(detailsContainer, android.R.drawable.ic_menu_manage , "Service", selectedService);
+        addDetailRow(detailsContainer, android.R.drawable.ic_menu_my_calendar, "Date", formatDate(selectedDate));
+        addDetailRow(detailsContainer, android.R.drawable.ic_menu_mylocation,  "Address", address);
+
+        if (!couponCode.isEmpty()) {
+            addDetailRow(detailsContainer, android.R.drawable.ic_menu_sort_by_size, "Coupon", couponCode);
+        }
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Set up the OK button
+        Button okButton = dialogView.findViewById(R.id.btn_ok);
+        okButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            finish(); // Close the activity when user clicks OK
+        });
+    }
+
+    // Helper method to add a detail row with an icon
+    private void addDetailRow(LinearLayout container, int iconResId, String label, String value) {
+        View rowView = getLayoutInflater().inflate(R.layout.item_booking_detail, container, false);
+
+        ImageView icon = rowView.findViewById(R.id.detail_icon);
+        TextView labelText = rowView.findViewById(R.id.detail_label);
+        TextView valueText = rowView.findViewById(R.id.detail_value);
+
+        icon.setImageResource(iconResId);
+        labelText.setText(label);
+        valueText.setText(value);
+
+        container.addView(rowView);
+    }
+
+    // Format date to be more readable
+    private String formatDate(String dateStr) {
+        try {
+            String[] parts = dateStr.split("-");
+            int year = Integer.parseInt(parts[0]);
+            int month = Integer.parseInt(parts[1]);
+            int day = Integer.parseInt(parts[2]);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, month - 1, day);
+
+            return new java.text.SimpleDateFormat("EEEE, MMMM d, yyyy", Locale.getDefault())
+                    .format(calendar.getTime());
+        } catch (Exception e) {
+            return dateStr;
+        }
     }
 
     @Override

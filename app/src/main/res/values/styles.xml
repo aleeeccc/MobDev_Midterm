@@ -6,4 +6,9 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColorHint">#9E9E9E</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>

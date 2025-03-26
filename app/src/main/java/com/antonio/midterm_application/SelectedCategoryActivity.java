@@ -2,45 +2,50 @@ package com.antonio.midterm_application;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SelectedCategoryActivity extends AppCompatActivity {
     private List<Cleaner> allCleaners = new ArrayList<>();
+    private CleanerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selected_category);
 
-        // Get data from intent
         String selectionType = getIntent().getStringExtra("SELECTION_TYPE");
         String categoryName = getIntent().getStringExtra("CATEGORY_NAME");
         String categoryFilter = getIntent().getStringExtra("CATEGORY_FILTER");
 
-        // Set title based on selection type
         TextView titleTextView = findViewById(R.id.selection_title);
         RecyclerView recyclerView = findViewById(R.id.recycler_selection);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Initialize cleaner data - this should ideally be shared with MainActivity
-        createCleanerData();
+        loadDataFromJson();
 
         if (selectionType.equals("CATEGORY")) {
-            // Display cleaners for this category
             titleTextView.setText(categoryName + " Professionals");
 
-            // Filter cleaners by category
             List<Cleaner> filteredCleaners = getCleanersForCategory(categoryFilter);
 
-            // Set up adapter
-            CleanerAdapter adapter = new CleanerAdapter(filteredCleaners, cleaner -> {
+            adapter = new CleanerAdapter(filteredCleaners, cleaner -> {
                 Intent intent = new Intent(SelectedCategoryActivity.this, CleanerProfileActivity.class);
                 intent.putExtra("NAME", cleaner.getName());
                 intent.putExtra("AGE", cleaner.getAge());
@@ -49,17 +54,64 @@ public class SelectedCategoryActivity extends AppCompatActivity {
                 intent.putExtra("ADDRESS", cleaner.getAddress());
                 intent.putExtra("CATEGORY", cleaner.getCategory());
                 intent.putExtra("IMAGE_URL", cleaner.getImageUrl());
+                intent.putExtra("ATTITUDE", cleaner.getAttitude());
+                intent.putExtra("CLEANING_QUALITY", cleaner.getCleaningQuality());
+                intent.putExtra("CUSTOMER_SATISFACTION", cleaner.getCustomerSatisfaction());
+                intent.putExtra("YEARS_OF_EXPERIENCE", cleaner.getYearsOfExperience());
+                intent.putExtra("ABOUT", cleaner.getAbout());
                 startActivity(intent);
             });
 
             recyclerView.setAdapter(adapter);
+            setupSearch();
         }
 
-        // Set back button in action bar
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(categoryName);
         }
+    }
+
+    private void loadDataFromJson() {
+        try {
+            JSONObject jsonObject = JSONParserActivity.getJsonData(this, "data.json");
+            allCleaners = JSONParserActivity.parseCleanersFromJson(jsonObject);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setupSearch() {
+        SearchView searchView = findViewById(R.id.searchViewSelection);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                filterCleaners(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterCleaners(newText);
+                return false;
+            }
+        });
+    }
+
+    private void filterCleaners(String query) {
+        List<Cleaner> tempList = new ArrayList<>();
+        if (query.isEmpty()) {
+            String categoryFilter = getIntent().getStringExtra("CATEGORY_FILTER");
+            tempList.addAll(getCleanersForCategory(categoryFilter));
+        } else {
+            String lowerCaseQuery = query.toLowerCase();
+            for (Cleaner cleaner : getCleanersForCategory(getIntent().getStringExtra("CATEGORY_FILTER"))) {
+                if (cleaner.getName().toLowerCase().contains(lowerCaseQuery)) {
+                    tempList.add(cleaner);
+                }
+            }
+        }
+        adapter.updateData(tempList);
     }
 
     @Override
@@ -68,21 +120,8 @@ public class SelectedCategoryActivity extends AppCompatActivity {
         return true;
     }
 
-    private void createCleanerData() {
-        // Same data as in MainActivity
-        allCleaners.add(new Cleaner("John Smith", 28, 4.7, "ic_person", "+1-555-123-4567", "123 Main St", "Cleaning Service"));
-        allCleaners.add(new Cleaner("Mary Johnson", 35, 4.9, "ic_person", "+1-555-987-6543", "456 Oak Ave", "Cleaning Service"));
-        allCleaners.add(new Cleaner("Robert Davis", 42, 4.5, "ic_person", "+1-555-234-5678", "789 Pine Rd", "Cleaning Appliance"));
-        allCleaners.add(new Cleaner("Sarah Wilson", 31, 4.8, "ic_person", "+1-555-345-6789", "101 Elm Blvd", "Babysitter Service"));
-        allCleaners.add(new Cleaner("Michael Brown", 26, 4.4, "ic_person", "+1-555-456-7890", "202 Maple Dr", "Car Wash"));
-        allCleaners.add(new Cleaner("Emma Davis", 29, 4.6, "ic_person", "+1-555-567-8901", "303 Cedar St", "Aircon Service"));
-        allCleaners.add(new Cleaner("James Wilson", 33, 4.9, "ic_person", "+1-555-678-9012", "404 Birch Ave", "Laundry Service"));
-        allCleaners.add(new Cleaner("Olivia Martin", 27, 4.7, "ic_person", "+1-555-789-0123", "505 Pine Blvd", "Pest Control"));
-        allCleaners.add(new Cleaner("William Johnson", 36, 4.5, "ic_person", "+1-555-890-1234", "606 Oak Dr", "Gardening Service"));
-    }
-
     private List<Cleaner> getCleanersForCategory(String category) {
-        if (category.equals("All Categories")) {
+        if (category.equals("All Cleaners")) {
             return new ArrayList<>(allCleaners);
         } else {
             List<Cleaner> filteredCleaners = new ArrayList<>();

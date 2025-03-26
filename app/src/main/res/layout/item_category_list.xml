@@ -22,6 +22,7 @@
             android:padding="8dp"
             app:strokeWidth="2dp"
             app:strokeColor="#FFFFFF"
+            android:scaleType="centerCrop"
             app:shapeAppearanceOverlay="@style/CircularImageView"
             android:contentDescription="Category icon"
             android:background="@drawable/circle_background"/>
